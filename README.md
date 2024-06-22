@@ -18,6 +18,35 @@ directory of those functions under `~/.zshrc.d` (perhaps in some sort of
 "development environment bootstrap" script).  That way, the implementations of
 those functions will automatically track any changes.
 
+## Function Documentation
+
+This configuration includes many shell functions that are intended for
+interactive usage, and given the poor legibility of shell code, it's important
+to provide some sort of documentation on what these functions do (for the sake
+of my future self).  But the standard facilities for documenting CLI tools
+(`man` or `info` pages, or `--help` options) are all much too heavyweight for
+this sort of personal-use tool.
+
+Since the ZSH `which` command outputs the full code for commands defined as
+shell functions but strips comments, I've adopted the habit of writing my
+functions like this:
+
+```zsh
+function foo() {
+  : << 'DOCSTRING'
+  ## Brief description of function.
+  #
+  # More detailed description of function.
+DOCSTRING
+
+  # Function implementation
+}
+```
+
+Recall that the `:` shell built-in is a no-op, so the "docstring" heredoc has no
+effect when executing the function.  But it will show up in the output for
+`which foo`, making this a viable documentation approach.
+
 ## Initial Setup
 
 Here's how to set up ZSH on a new machine:
