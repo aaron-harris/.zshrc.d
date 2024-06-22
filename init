@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+## Set up the current user's .zshrc to include all scripts under ~/.zshrc.d.
+#
+# Only files with .sh or .zsh extensions will be sourced.  Notice that this file
+# itself does not have any extension, so it won't be included if this project is
+# cloned under ~/.zshrc.d (the expected organizational structure).
+#
+# File discovery is recursive, so sub-directories may be used for organization.
+#
+# Moreover, symlinks will be traversed.  This allows individual projects to
+# register useful shell functions and aliases by symlinking a scripts directory
+# into this directory (assumed by convention to be ~/.zshrc.d).  One additional
+# benefit of this approach is that the implementation of such scripts will
+# automatically track any changes.
+
+cat <<- 'EOF' > ~/.zshrc
+	
+	# Source all .sh and .zsh files within .zshrc.d; see ~/.zshrc.d/init.
+	for FILE in $(find -L ~/.zshrc.d -regex "^.*/.+[.]z?sh$"); do source $FILE; done
+EOF
