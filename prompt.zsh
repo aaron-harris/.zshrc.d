@@ -23,7 +23,7 @@ function git-repo() {
   ## If in a Git repo, shows name of repository; no output otherwise.
 DOCSTRING
 
-  basename $(git rev-parse --show-toplevel 2> /dev/null) 2> /dev/null
+  basename "$(git rev-parse --show-toplevel 2> /dev/null)" 2> /dev/null
 }
 
 function toggle-git-prompt() {
@@ -46,11 +46,12 @@ function _git-info-for-prompt() {
   # If PROMPT_GIT variable is unset, instead show only "(-)" when in a repo.
 DOCSTRING
 
-  local REPO=$(git-repo)
+  local REPO; REPO=$(git-repo)
+  local BRANCH; BRANCH=$(git-branch)
 
   local OPEN_PAREN="%F{blue\}(%f"
   local REPO_PART="%F{blue\}$REPO%f"
-  local BRANCH_PART="%F{magenta\}$(git-branch)%f"
+  local BRANCH_PART="%F{magenta\}$BRANCH%f"
   local CLOSE_PAREN="%F{blue\})%f"
 
   case ${+PROMPT_GIT} in

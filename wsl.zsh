@@ -8,7 +8,7 @@
 # this Stack Overflow answer:
 #   https://superuser.com/a/1749811/460709
 
-if [ -n $WSL_DISTRO_NAME ]; then
+if [[ -n $WSL_DISTRO_NAME ]]; then
   function open() {
     : << 'DOCSTRING'
     ## Open the specified file in Windows Explorer.
@@ -20,6 +20,6 @@ if [ -n $WSL_DISTRO_NAME ]; then
     # $1 - The file to be opened, as a Linux path
 DOCSTRING
 
-    explorer.exe $(wslpath -w $1)
+    explorer.exe "$(wslpath -w "$1")"
   }
 fi
