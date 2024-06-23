@@ -31,9 +31,9 @@ function toggle-git-prompt() {
   ## Toggles display of Git info in shell prompt.
 DOCSTRING
 
-  case ${+PROMPT_GIT} in
-    (1) unset PROMPT_GIT;;
-    (0) export PROMPT_GIT='enabled';;
+  case ${+PROMPT_HIDE_GIT} in
+    (0) export PROMPT_HIDE_GIT='true';;
+    (1) unset PROMPT_HIDE_GIT;;
   esac
 }
 
@@ -41,9 +41,9 @@ function _git-info-for-prompt() {
   : << 'DOCSTRING'
   ## Retrieve info about current Git repo for use in prompt.
   #
-  # Shows current repository name (in blue) and branch name (in magenta).
-  #
-  # If PROMPT_GIT variable is unset, instead show only "(-)" when in a repo.
+  # - If currently in a repo, show current repository name (in blue) and branch name (in magenta).
+  # - If PROMPT_HIDE_GIT variable is set (to any value), instead show a constant value "(-)".
+  # - If not in a repo, show nothing.  This takes precedence over PROMPT_HIDE_GIT.
 DOCSTRING
 
   local REPO; REPO=$(git-repo)
@@ -54,9 +54,9 @@ DOCSTRING
   local BRANCH_PART="%F{magenta\}$BRANCH%f"
   local CLOSE_PAREN="%F{blue\})%f"
 
-  case ${+PROMPT_GIT} in
-    (0) local GIT_INFO="${OPEN_PAREN}-${CLOSE_PAREN}";;
-    (1) local GIT_INFO="${OPEN_PAREN}${REPO_PART}:${BRANCH_PART}${CLOSE_PAREN}";;
+  case ${+PROMPT_HIDE_GIT} in
+    (0) local GIT_INFO="${OPEN_PAREN}${REPO_PART}:${BRANCH_PART}${CLOSE_PAREN}";;
+    (1) local GIT_INFO="${OPEN_PAREN}-${CLOSE_PAREN}";;
   esac
 
   echo "${REPO:+ $GIT_INFO}"
