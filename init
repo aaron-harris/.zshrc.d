@@ -14,8 +14,20 @@
 # benefit of this approach is that the implementation of such scripts will
 # automatically track any changes.
 
+# Note that the implementation intentionally avoids using some common regex
+# operators (in particular, '|', '+', and '?'), because the 'find' command
+# differs between operating systems both in its default regex dialect (GNU
+# Emacs for Ubuntu/WSL and BRE for Mac) and in the syntax used to switch
+# dialects, and this init script should be portable across operating systems.
+# See https://www.greenend.org.uk/rjk/tech/regexp.html for an explanation of
+# the differences between regex dialects.
+
 cat <<- 'EOF' > ~/.zshrc
-	
+
 	# Source all .sh and .zsh files within .zshrc.d; see ~/.zshrc.d/init.
-	for FILE in $(find -L ~/.zshrc.d -regex "^.*/.+[.]z?sh$"); do source $FILE; done
+	for FILE in $(find -L ~/.zshrc.d \
+	    -regex '^.*/..*[.]zsh$' \
+	    -or -regex '^.*/..*[.]zsh$')
+	  do source $FILE
+	done
 EOF
