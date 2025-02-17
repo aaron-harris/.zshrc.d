@@ -15,7 +15,7 @@ function git-branch() {
   # From https://gist.github.com/joseluisq/1e96c54fa4e1e5647940
 DOCSTRING
 
-  git branch 2> /dev/null | sed --silent --expression='s/^\* \(.*\)/\1/p'
+  git branch 2> /dev/null | sed -ne 's/^\* \(.*\)/\1/p'
 }
 
 function git-repo() {
@@ -64,4 +64,4 @@ DOCSTRING
 
 setopt PROMPT_SUBST
 export PROMPT="%B%F{green}%3~\$(_git-info-for-prompt)%F{green} %#%f%b "
-export RPROMPT="\$(date --utc '+%T')"
+export RPROMPT="\$(date -u '+%T')"
