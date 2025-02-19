@@ -4,6 +4,10 @@
 # Windows Subsystem for Linux) and will only be defined when it appears that the
 # current environment is running in WSL.
 #
+# Aliases here to Windows-native tools will generally not specify an explicit
+# path, instead assuming that the tool will have been separately installed and
+# added to the Windows-side PATH.
+#
 # The heuristic for determining whether we are running in WSL was taken from
 # this Stack Overflow answer:
 #   https://superuser.com/a/1749811/460709
@@ -22,4 +26,10 @@ DOCSTRING
 
     explorer.exe "$(wslpath -w "$1")"
   }
+
+  # Emacs
+  alias emacs=runemacs.exe
+
+  # IntelliJ IDEA
+  alias ij=idea64.exe
 fi
